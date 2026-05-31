@@ -76,9 +76,14 @@ const rootCause = data.rootCause || {
         {/* CHARTS GRID */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <SectionCard title="Delivery Time Trend">
-            <div className="h-72">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={trend}>
+            <div className="h-[300px] w-full">
+              <ResponsiveContainer width="100%"
+                height="100%"
+                minWidth={300}>
+                <LineChart data={trend}
+                  width={600}
+                  height={300}
+                >
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
                   <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fill: "#6b7280", fontSize: 12 }} />
                   <YAxis axisLine={false} tickLine={false} tick={{ fill: "#6b7280", fontSize: 12 }} />
@@ -100,8 +105,10 @@ const rootCause = data.rootCause || {
           </SectionCard>
 
           <SectionCard title="Zone Performance">
-            <div className="h-72">
-              <ResponsiveContainer width="100%" height="100%">
+            <div className="h-[300px] w-full">
+              <ResponsiveContainer width="100%"
+                height="100%"
+                minWidth={300}>
                 <BarChart data={zones}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
                   <XAxis dataKey="zone" axisLine={false} tickLine={false} tick={{ fill: "#6b7280", fontSize: 12 }} />
