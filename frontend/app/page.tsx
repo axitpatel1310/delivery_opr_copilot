@@ -28,10 +28,22 @@ useEffect(() => {
 if (!data) {
   return (
     <main className="min-h-screen flex items-center justify-center">
-      <p>Loading analytics...</p>
+      Loading...
     </main>
   );
 }
+const trend = data.trend || [];
+
+const zones = data.zones || [];
+
+const restaurants = data.restaurants || [];
+
+const kpis = data.kpis || {};
+
+const rootCause = data.rootCause || {
+  cause: "Unknown",
+  recommendation: "No recommendation available",
+};
 
   return (
     <main className="min-h-screen bg-gray-50/50 p-6 md:p-10">
@@ -55,10 +67,10 @@ if (!data) {
 
         {/* KPI CARDS */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <MetricCard title="Orders" value={data.kpis.orders.toLocaleString()} />
-          <MetricCard title="Revenue" value={`€${data.kpis.revenue.toLocaleString()}`} />
-          <MetricCard title="Avg Delivery" value={`${data.kpis.avgDelivery} min`} />
-          <MetricCard title="Late Deliveries" value={`${data.kpis.lateRate}%`} />
+          <MetricCard title="Orders" value={kpis.orders?.toLocaleString() ?? "0"} />
+          <MetricCard title="Revenue" value={`€${kpis.revenue?.toLocaleString() ?? "0"}`} />
+          <MetricCard title="Avg Delivery" value={`${kpis.avgDelivery ?? 0} min`} />
+          <MetricCard title="Late Deliveries" value={`${kpis.lateRate ?? 0}%`} />
         </div>
 
         {/* CHARTS GRID */}
@@ -66,7 +78,7 @@ if (!data) {
           <SectionCard title="Delivery Time Trend">
             <div className="h-72">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={data.trend}>
+                <LineChart data={trend}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
                   <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fill: "#6b7280", fontSize: 12 }} />
                   <YAxis axisLine={false} tickLine={false} tick={{ fill: "#6b7280", fontSize: 12 }} />
@@ -90,7 +102,7 @@ if (!data) {
           <SectionCard title="Zone Performance">
             <div className="h-72">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data.zones}>
+                <BarChart data={zones}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
                   <XAxis dataKey="zone" axisLine={false} tickLine={false} tick={{ fill: "#6b7280", fontSize: 12 }} />
                   <YAxis axisLine={false} tickLine={false} tick={{ fill: "#6b7280", fontSize: 12 }} />
@@ -119,7 +131,7 @@ if (!data) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {data.restaurants.map((restaurant) => (
+                  {restaurants.map((restaurant: any) => (
                     <tr key={restaurant.name} className="group hover:bg-gray-50 transition-colors">
                       <td className="py-3 font-medium text-gray-900 group-hover:text-gray-700">
                         {restaurant.name}
@@ -140,13 +152,13 @@ if (!data) {
               <div className="rounded-lg bg-blue-50 p-4 ring-1 ring-inset ring-blue-700/10">
                 <h3 className="text-sm font-semibold text-blue-800">Primary Cause</h3>
                 <p className="mt-1 text-sm text-blue-700 leading-relaxed">
-                  {data.rootCause.cause}
+                  {rootCause.cause}
                 </p>
               </div>
               <div className="rounded-lg bg-gray-50 p-4 ring-1 ring-inset ring-gray-200">
                 <h3 className="text-sm font-semibold text-gray-800">Recommendation</h3>
                 <p className="mt-1 text-sm text-gray-600 leading-relaxed">
-                  {data.rootCause.recommendation}
+                  {rootCause.recommendation}
                 </p>
               </div>
               <div className="flex items-center gap-2 text-xs text-gray-500 pt-1">
