@@ -1,0 +1,12 @@
+{
+  "kpis": {
+    "orders": 1000000,
+    "revenue": 35001991.3,
+    "avgDelivery": 0.52,
+    "lateRate": 0.33
+  },
+  "rootCause": {
+    "cause": "Traffic / Travel Delays",
+    "recommendation": "Optimize delivery routing and courier allocation."
+  }
+}
